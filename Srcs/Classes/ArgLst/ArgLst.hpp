@@ -2,28 +2,31 @@
 
 #include <iostream>
 
+#define STRING 3000
+#define INT 3001
+#define VOID 3002
+
 class Var {
 	public:
 	// <===Constructors & Destructors===>
 		Var();
 		Var(Var& Old);
-		template <typename V> Var(V var);
-		template <class C> Var(C cl);
 
 		~Var();
 
 	// <===Operators===>
 		Var&	operator=(Var& Old);
+		// int&		operator[](int);
 
 	// <===Methods===>
 		template <typename V> void	setValue(V var);
 		template <typename V> V		getValue();
 		void						setType(std::string _Type);
-		std::string					getType();
+		int							getType();
 
 	private:
-		void		*Value;
-		std::string	type;
+		void			*Value;
+		int				Type;
 };
 
 class ArgLst {
@@ -38,10 +41,13 @@ class ArgLst {
 		ArgLst&	operator=(ArgLst& Old);
 
 	// <===Methods===>
-		void	Add(Var var);
-		void	Remove(int Index, std::string Type);
-		void	getArg(int Index, std::string Type);
+		void					Add(int Index, Var var);
+		void					Remove(int Index);
+		template <typename V> V	getArg(int Index);
+		bool					isEmpty();
+		int						getSize();
 
 	private:
-		Var	Args[];
+		int	Size;
+		Var	*Args;
 };
